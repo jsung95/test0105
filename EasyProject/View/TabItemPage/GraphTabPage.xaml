@@ -1,0 +1,31 @@
+﻿<Page x:Class="EasyProject.View.TabItemPage.GraphTabPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:EasyProject.View.TabItemPage"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="GraphTabPage">
+
+    <StackPanel Orientation="Vertical" Background="white">
+        <Grid Height="40">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
+                <Button Uid="0" Height="40" Width="150" Click="TabButtonClick" ToolTip="종합" Foreground="#ff2196f3" Content="종합" Background="{x:Null}" BorderBrush="{x:Null}" Cursor="Hand"/>
+                <Button Uid="1" Height="40" Width="150" Click="TabButtonClick" ToolTip="선택" Foreground="#ff2196f3" Content="선택" Background="{x:Null}" BorderBrush="{x:Null}" Cursor="Hand"/>
+                
+            </StackPanel>
+
+            
+
+            <Grid x:Name="GridCursor" Width="150" Height="5" Background="#ff2196f3" VerticalAlignment="Bottom" HorizontalAlignment="Left"></Grid>
+
+
+        </Grid>
+        <Grid x:Name="TabBorder" Width="1300" Height="1" Background="LightGray" VerticalAlignment="Bottom" HorizontalAlignment="Left"></Grid>
+
+        <Grid Height="550">
+            <Frame x:Name="TabFrame" NavigationUIVisibility="Hidden" Source="/View/TabItemPage/GraphPage/AllGraphPage.xaml" Height="550" VerticalAlignment="Bottom"/>
+        </Grid>
+    </StackPanel>
+</Page>

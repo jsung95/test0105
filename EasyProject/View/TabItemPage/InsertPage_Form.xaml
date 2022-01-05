@@ -1,0 +1,165 @@
+﻿<Page x:Class="EasyProject.View.TabItemPage.InsertPage_Form"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:EasyProject.View.TabItemPage"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+      xmlns:vm="clr-namespace:EasyProject.ViewModel"
+      mc:Ignorable="d"
+      Title="InsertPage_Form"
+      DataContext="{Binding PVM, Source={StaticResource Locator}}"
+      >
+
+
+    <Grid Height="450">
+        <materialDesign:Card Grid.Column="0" Margin ="10,10,10,10" UniformCornerRadius="20" Background="White">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="0.8*"/>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="제품 코드" Margin="20" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="SemiBold" FontSize="13"></TextBlock>
+                    <TextBox x:Name="productCode_TxtBox" Grid.Column="1" HorizontalContentAlignment="Left" 
+                       VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Margin="0,0,20,0" Height="30" 
+                             Text="{Binding Product.Prod_code}" Cursor="IBeam"/>
+                </Grid>
+
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock  Text="제품명" Margin="20" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="SemiBold" FontSize="13"></TextBlock>
+                    <TextBox x:Name="productName_TxtBox" Grid.Column="1" HorizontalContentAlignment="Left" 
+                       VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Margin="0,0,20,0" Height="30" 
+                             Text="{Binding Product.Prod_name}" Cursor="IBeam"/>
+                </Grid>
+
+                <Grid Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock  Text="품목/종류" Margin="20" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="SemiBold" FontSize="13"></TextBlock>
+                    <ComboBox x:Name="categoryName_ComboBox" Grid.Column="1" HorizontalContentAlignment="Left" 
+                       VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Margin="0,0,20,0" Height="30" 
+                       ItemsSource="{Binding Path=Categories}" SelectedItem="{Binding SelectedCategory}">
+                        <ComboBox.Resources>
+                            <SolidColorBrush x:Key="MaterialDesignPaper" Color="White"/>
+                        </ComboBox.Resources>
+
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Category_name}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <TextBox x:Name="categoryName_TextBox" Grid.Column="2" HorizontalContentAlignment="Left" Text="{Binding AddCategoryName}"
+                       VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Margin="0,0,20,0" Height="30">
+                        <TextBox.Style>
+                            <Style TargetType="TextBox">
+                                <Setter Property="IsEnabled" Value="False"></Setter>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding SelectedCategory.Category_name}" Value="직접 입력">
+                                        <Setter Property="IsEnabled" Value="True"></Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBox.Style>
+                    </TextBox>
+                </Grid>
+
+                <Grid Grid.Row="3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock  Text="유통기한" Margin="20" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="SemiBold" FontSize="13"></TextBlock>
+                    <DatePicker x:Name="expirationDate_DatePicker" Grid.Column="1" HorizontalContentAlignment="Left" 
+                       VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Margin="0,0,20,0" 
+                                SelectedDate="{Binding Product.Prod_expire}">
+                        <DatePicker.Resources>
+                            <Style x:Key="CustomCalendarDayButton" TargetType="CalendarDayButton" BasedOn="{StaticResource MaterialDesignCalendarDayButton}">
+                                <Setter Property="materialDesign:CalendarAssist.SelectionColor" Value="#ff2196f3" />
+                                <Setter Property="materialDesign:CalendarAssist.SelectionForegroundColor" Value="white" />
+                            </Style>
+                            <Style x:Key="CustomCalendarButton" TargetType="CalendarButton" BasedOn="{StaticResource MaterialDesignCalendarButton}">
+                                <Setter Property="materialDesign:CalendarAssist.SelectionColor" Value="#ff2196f3" />
+                                <Setter Property="materialDesign:CalendarAssist.SelectionForegroundColor" Value="White" />
+                            </Style>
+                            <Style x:Key="CustomCalendar" TargetType="{x:Type Calendar}" BasedOn="{StaticResource MaterialDesignDatePickerCalendarPortrait}">
+                                <Setter Property="Background" Value="White" />
+                                <Setter Property="Foreground" Value="lightGray" />
+                                <Setter Property="materialDesign:CalendarAssist.HeaderBackground" Value="DarkGray" />
+                                <Setter Property="materialDesign:CalendarAssist.HeaderForeground" Value="White" />
+                                <Setter Property="CalendarDayButtonStyle" Value="{StaticResource CustomCalendarDayButton}" />
+                                <Setter Property="CalendarButtonStyle" Value="{StaticResource CustomCalendarButton}" />
+                            </Style>
+                            <Style TargetType="DatePicker" BasedOn="{StaticResource MaterialDesignFloatingHintDatePicker}">
+                                <Setter Property="CalendarStyle" Value="{StaticResource CustomCalendar}" />
+                            </Style>
+                        </DatePicker.Resources>
+                    </DatePicker>
+                </Grid>
+
+                <Grid Grid.Row="4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="가격" Grid.Column="0" Margin="20" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="SemiBold" FontSize="13"></TextBlock>
+                    <TextBox x:Name="productPrice_TxtBox" Grid.Column="1" HorizontalContentAlignment="Left" 
+                       VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Margin="0,0,20,0" Height="30" 
+                             Text="{Binding Product.Prod_price}" Cursor="IBeam" PreviewTextInput="productPrice_TxtBox_PreviewTextInput"/>
+                    <TextBlock Text="수량" Grid.Column="2" Margin="20" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="SemiBold" FontSize="13"></TextBlock>
+                    <TextBox x:Name="productQuantity_TxtBox" Grid.Column="3" HorizontalContentAlignment="Left" 
+                       VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Margin="0,0,20,0" Height="30" 
+                             Text="{Binding Product.Prod_total}" PreviewTextInput="productQuantity_TxtBox_PreviewTextInput"/>
+                </Grid>
+
+                <Grid Grid.Row="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button x:Name="backBtn" Content="초기화" Grid.Column="0" Background="Red" FontSize="13" FontWeight="Bold" HorizontalAlignment="Left"  
+                       VerticalAlignment="Center" Margin="10,0,0,0" BorderThickness="0" Height="30" Width="90" Command="{Binding ResetCommand}" Cursor="Hand"/>
+                    <Button x:Name="cancelBtn" Content="취소" Grid.Column="2" Background="LightGray" FontSize="13" FontWeight="Bold" HorizontalAlignment="Left"  
+                       VerticalAlignment="Center" Margin="0,0,10,0" BorderThickness="0" Height="30" Width="90" Cursor="Hand" />
+                    <Button x:Name="signUpBtn" Content="확인" Grid.Column="3" Background="#4472C4" FontSize="13" FontWeight="Bold" HorizontalAlignment="Left"  
+                       VerticalAlignment="Center" Margin="0,0,10,0" BorderThickness="0" Height="30" Width="90" Cursor="Hand" Command="{Binding Command}">
+                        <!--
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:InvokeCommandAction  Command="{Binding Command}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        -->
+                    </Button>
+
+                </Grid>
+
+            </Grid>
+        </materialDesign:Card>
+    </Grid>
+</Page>

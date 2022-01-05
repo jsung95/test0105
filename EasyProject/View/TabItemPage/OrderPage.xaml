@@ -1,0 +1,194 @@
+﻿<Page x:Class="EasyProject.View.OrderPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"            
+      xmlns:vm="clr-namespace:EasyProject.ViewModel"
+      xmlns:local="clr-namespace:EasyProject.View" 
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      DataContext="{Binding PSVM, Source={StaticResource Locator}}"
+      Title="OrderPage">
+
+    <Grid Height="450" Width="800" >
+        <materialDesign:Card  Margin ="10,10,10,10" UniformCornerRadius="20" Background="White">
+            <Grid Height="400" Width="750" Background="White" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.2*"/>
+                <RowDefinition Height="0.5*"/>
+                <RowDefinition Height="0.6*"/>
+                <RowDefinition Height="0.8*"/>
+                <RowDefinition Height="0.2*"/>
+            </Grid.RowDefinitions>
+
+            <!--맨 뒤로 보내기 해서 Grid.Row="4"가 여기 위치하게 됬슴다-->
+            <Grid Grid.Row="4" Background="#4472C4"/>
+            <Button x:Name="submitBtn" Content="제출"  Foreground="#4472C4" Background="white" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
+                    VerticalAlignment="Center" Margin="682,135.6,0,10" BorderThickness="0" Height="28" Width="58" Cursor="Hand" Grid.Row="3" Grid.RowSpan="2" />
+            
+            <Button x:Name="printBtn" Content="인쇄"  Foreground="#4472C4" Background="white" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
+                    VerticalAlignment="Center" Margin="682,135.6,0,10" BorderThickness="0" Height="28" Width="58" Cursor="Hand" Grid.Row="3" Grid.RowSpan="2" Click="printBtn_Click" />
+
+
+            <Grid Grid.Row="0" Background="#4472C4">
+                <TextBlock FontWeight="Bold" FontSize="15" TextAlignment="left" Margin="23,8,641.4,7.2" VerticalAlignment="center"><Run Foreground="White" Text="발주 신청서" IsEnabled="False" /></TextBlock>
+
+
+                <StackPanel  Margin="5" Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Button x:Name="resetBtn"  Foreground="white" Background="#4472C4" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
+                        VerticalAlignment="Center" Margin="625,5,0,2.2" BorderThickness="0" Height="28" Width="58" Cursor="Hand" Click="resetBtn_Click" >
+                            <materialDesign:PackIcon Grid.Row="0" Kind="Restore" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="15" Width="15" />
+                        </Button>
+                </StackPanel>
+
+            </Grid>
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.4*"/>
+                    <RowDefinition Height="0.6*"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Rectangle Fill="White" HorizontalAlignment="Left" Height="10" Margin="17,11,0,0" Stroke="#4472C4" VerticalAlignment="center" Width="10"/>
+                    <TextBlock  FontSize="12" FontWeight="Bold" HorizontalAlignment="Left" Margin="41,15,0,4.2" TextWrapping="Wrap" Text="신청자 정보" VerticalAlignment="center" Foreground="#4472C4"/>
+                </Grid>
+
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="68*"/>
+                        <ColumnDefinition Width="120*"/>
+                        <ColumnDefinition Width="68*"/>
+                        <ColumnDefinition Width="120*"/>
+                        <ColumnDefinition Width="68*"/>
+                        <ColumnDefinition Width="120*"/>
+                        <ColumnDefinition Width="68*"/>
+                        <ColumnDefinition Width="120*"/>
+                        <ColumnDefinition Width="68*"/>
+                    </Grid.ColumnDefinitions>
+
+
+                    <Label Content="담당자" Foreground="#4472C4" Grid.Column="0" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
+                       VerticalAlignment="Center" Margin="10,0,0,0"/>
+                    <TextBox x:Name="id_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="아이디" Grid.Column="1" HorizontalContentAlignment="Left" 
+                       VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" 
+                             Text="{Binding SelectedUser.Nurse_name}"/>
+
+                    <Label Content="부서" Grid.Column="2" Foreground="#4472C4" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
+                       VerticalAlignment="Center" Margin="10,0,0,0"/>
+                    <TextBox x:Name="dept_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="부서" Grid.Column="3" HorizontalContentAlignment="Left" 
+                       VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" 
+                             Text="{Binding SelectedUser.Dept_name}"/>
+                        <!--<ComboBox x:Name="deptName_ComboBox" Grid.Column="3" HorizontalContentAlignment="Left" 
+                       VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Margin="10,0,10,0" Height="30"
+                       ItemsSource="{Binding Path=Depts}" >
+                            <ComboBox.Resources>
+                                <SolidColorBrush x:Key="MaterialDesignPaper" Color="White"/>
+                            </ComboBox.Resources>
+                        
+                            <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Dept_name}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                    </ComboBox>-->
+
+                    <Label Content="연락처" Grid.Column="4" Foreground="#4472C4" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
+                       VerticalAlignment="Center" Margin="10,0,0,0"/>
+                    <TextBox x:Name="phone_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="- 빼고입력" Grid.Column="5" HorizontalContentAlignment="Left" 
+                       VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" 
+                             Text="{Binding SelectedUser.Dept_phone}"/>
+
+                </Grid>
+
+            </Grid>
+
+            <Grid Grid.Row="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.3*"/>
+                    <RowDefinition Height="0.7*"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+
+                    <TextBlock  FontSize="12" FontWeight="Bold" HorizontalAlignment="Left" Margin="42,13,0,2.2" 
+                                TextWrapping="Wrap" Text="발주 정보" VerticalAlignment="center" Foreground="#4472C4"/>
+                    <Rectangle Fill="White" HorizontalAlignment="Left" Height="10" 
+                               Margin="17,11,0,0" Stroke="#4472C4" VerticalAlignment="center" Width="10"/>
+                </Grid>
+
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="80*"/>
+                        <ColumnDefinition Width="100*"/>
+                        <ColumnDefinition Width="50*"/>
+                        <ColumnDefinition Width="100*"/>
+                        <ColumnDefinition Width="50*"/>
+                        <ColumnDefinition Width="100*"/>
+                        <ColumnDefinition Width="70*"/>
+                        <ColumnDefinition Width="190*"/>
+
+
+                    </Grid.ColumnDefinitions>
+                    <Label Content="신청 품목명" Foreground="#4472C4" Grid.Column="0" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
+                       VerticalAlignment="Center" Margin="10,0,0,0"/>
+                    <TextBox x:Name="request_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="신청품목명" Grid.Column="1" HorizontalContentAlignment="Left" 
+                       VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" 
+                             Text="{Binding SelectedProduct.Prod_name}"/>
+
+                    <Label Content="용량" Foreground="#4472C4" Grid.Column="2" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
+                       VerticalAlignment="Center" Margin="10,0,0,0"/>
+                    <TextBox x:Name="capacity_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="용량" Grid.Column="3" HorizontalContentAlignment="Left" 
+                       VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" />
+
+                    <Label Content="수량" Foreground="#4472C4" Grid.Column="4" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
+                       VerticalAlignment="Center" Margin="10,0,0,0"/>
+                    <TextBox x:Name="amount_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="수량" Grid.Column="5" HorizontalContentAlignment="Left" 
+                       VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" />
+
+                    <Label Content="제조사명" Foreground="#4472C4" Grid.Column="6" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
+                       VerticalAlignment="Center" Margin="10,0,0,0"/>
+
+                    <Grid Grid.Column="7">
+
+
+                        <TextBox x:Name="company_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="제조사명"  HorizontalContentAlignment="Left" 
+                       VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center" Margin="10,21,34.8,21.8" Height="30" />
+
+
+                    </Grid>
+                </Grid>
+            </Grid>
+
+            <Grid Grid.Row="3">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.4*"/>
+                    <RowDefinition Height="0.6*"/>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0">
+                    <TextBlock  FontSize="12" FontWeight="Bold" HorizontalAlignment="Left" Margin="42,13,0,2.2" TextWrapping="Wrap" Text="메모" VerticalAlignment="center" Foreground="#4472C4"/>
+                    <Rectangle Fill="White" HorizontalAlignment="Left" Height="10" Margin="17,11,0,0" Stroke="#4472C4" VerticalAlignment="center" Width="10"/>
+                </Grid>
+                <Grid Grid.Row="1">
+                    <TextBox x:Name="memo_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="내용을 입력해주세요"  HorizontalContentAlignment="Left" 
+                       VerticalContentAlignment="Center" FontSize="9" VerticalAlignment="top" Margin="10,0,10,0" Height="65" />
+                </Grid>
+            </Grid>         
+        </Grid>          
+     </materialDesign:Card>
+        <Path Stroke="Black" StrokeThickness="1" >
+            <Path.Data>
+                <LineGeometry StartPoint="50,148" EndPoint="750,148" />
+            </Path.Data>
+        </Path>
+
+        <Path Stroke="Black" StrokeThickness="1" >
+            <Path.Data>
+                <LineGeometry StartPoint="50,260" EndPoint="750,260" />
+            </Path.Data>
+        </Path>
+    </Grid>
+
+</Page>

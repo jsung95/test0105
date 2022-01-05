@@ -1,0 +1,220 @@
+﻿<Page x:Class="EasyProject.View.TabItemPage.IncomingOutgoingList1Page"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:EasyProject.View.TabItemPage"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:wookoa="clr-namespace:System;assembly=mscorlib"
+      xmlns:vm="clr-namespace:EasyProject.ViewModel"
+      mc:Ignorable="d"
+      DataContext="{Binding PIOVM, Source={StaticResource Locator}}"
+      Title="IncomingOutgoingList1Page" Cursor="Hand">
+
+    <Page.Resources>
+        <Style TargetType="DataGridColumnHeader">
+            <Setter Property="Background" Value="#EAEAEA"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Height" Value="20"/>
+        </Style>
+        <Style TargetType="DataGrid">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="VerticalGridLinesBrush" Value="#4472C4"/>
+            <Setter Property="HorizontalGridLinesBrush" Value="#4472C4"/>
+            <Setter Property="RowHeight" Value="27"/>
+            <Setter Property="RowHeaderWidth" Value="0"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
+        </Style>
+    </Page.Resources>
+
+    <Grid Height="450" Width="1000"> 
+        <materialDesign:Card Grid.Column="0"  UniformCornerRadius="20" Background="White" >
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="0.3*"/>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0">
+                    <Grid Grid.Column="0" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.3*"/>
+                            <RowDefinition Height="2*"/>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="60*"/>
+                                <ColumnDefinition Width="200*"/>
+                                <ColumnDefinition Width="60*"/>
+                                <ColumnDefinition Width="90*"/>
+                                <ColumnDefinition Width="120*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <ComboBox x:Name="searchText_ComboBox" Margin="10 0" Height="30" Grid.Column="0" HorizontalContentAlignment="Left" ItemsSource="{Binding Path=SearchTypeList}"
+                       SelectedItem="{Binding selectedSearchType_In}">
+                                <ComboBox.Resources>
+                                    <SolidColorBrush x:Key="MaterialDesignPaper" Color="White"/>
+                                </ComboBox.Resources>
+                            </ComboBox>
+
+                            <TextBox x:Name="phone_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="검색할 품목을 입력해주세요" Grid.Column="1" HorizontalContentAlignment="Left" 
+                       VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" 
+                                     Text="{Binding searchKeyword_In}" Cursor="Hand"/>
+
+                            <Button x:Name="search_Btn" Grid.Column="2" Foreground="#4472C4"  FontSize="12" FontWeight="Bold"  Background="White"
+                            VerticalAlignment="Center" Height="30"  Width="45" HorizontalAlignment="Left" 
+                                    Command="{Binding InSearchCommand}" Cursor="Hand">
+                                <materialDesign:PackIcon  Kind="Search" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="15" Width="15" />
+                            </Button>
+
+                            <Label Content="부서명" Foreground="#4472C4" Grid.Column="2" FontSize="12" 
+                       FontWeight="Bold" HorizontalAlignment="Right"  
+                       VerticalAlignment="Center"/>
+
+                            <ComboBox x:Name="deptName_ComboBox1" Height="30" Grid.Column="3" Margin="10 0" HorizontalContentAlignment="Left" 
+                                ItemsSource="{Binding Path=Depts}" SelectedItem="{Binding SelectedDept_In}" DropDownClosed="OnDropDownOpened">
+                                <ComboBox.Resources>
+                                    <SolidColorBrush x:Key="MaterialDesignPaper" Color="White"/>
+                                </ComboBox.Resources>
+
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Dept_name}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                            <Grid Grid.Column="4">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="0.1*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <DatePicker x:Name="expirationDate_DatePicker"  Grid.Column="0" HorizontalContentAlignment="Left" 
+                                        VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Width="90" Height="33"
+                                        SelectedDate="{Binding SelectedStartDate}">
+                                        <DatePicker.Resources>
+                                            <Style x:Key="CustomCalendarDayButton" TargetType="CalendarDayButton" BasedOn="{StaticResource MaterialDesignCalendarDayButton}">
+                                                <Setter Property="materialDesign:CalendarAssist.SelectionColor" Value="#ff2196f3" />
+                                                <Setter Property="materialDesign:CalendarAssist.SelectionForegroundColor" Value="white" />
+                                            </Style>
+                                            <Style x:Key="CustomCalendarButton" TargetType="CalendarButton" BasedOn="{StaticResource MaterialDesignCalendarButton}">
+                                                <Setter Property="materialDesign:CalendarAssist.SelectionColor" Value="#ff2196f3" />
+                                                <Setter Property="materialDesign:CalendarAssist.SelectionForegroundColor" Value="White" />
+                                            </Style>
+                                            <Style x:Key="CustomCalendar" TargetType="{x:Type Calendar}" BasedOn="{StaticResource MaterialDesignDatePickerCalendarPortrait}">
+                                                <Setter Property="Background" Value="White" />
+                                                <Setter Property="Foreground" Value="lightGray" />
+                                                <Setter Property="materialDesign:CalendarAssist.HeaderBackground" Value="DarkGray" />
+                                                <Setter Property="materialDesign:CalendarAssist.HeaderForeground" Value="White" />
+                                                <Setter Property="CalendarDayButtonStyle" Value="{StaticResource CustomCalendarDayButton}" />
+                                                <Setter Property="CalendarButtonStyle" Value="{StaticResource CustomCalendarButton}" />
+                                            </Style>
+                                            <Style TargetType="DatePicker" BasedOn="{StaticResource MaterialDesignFloatingHintDatePicker}">
+                                                <Setter Property="CalendarStyle" Value="{StaticResource CustomCalendar}" />
+                                            </Style>
+                                        </DatePicker.Resources>
+                                    </DatePicker>
+                                    
+                                <TextBlock   HorizontalAlignment="Center" Grid.Column="1" VerticalAlignment="Center" Text="~" FontWeight="Bold" FontSize="15" />
+                                <DatePicker x:Name="expirationDate_DatePicker2" Grid.Column="2" HorizontalContentAlignment="Left" Width="90" Height="33"
+                                        VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" 
+                                        SelectedDate="{Binding SelectedEndDate}">
+                                    <DatePicker.Resources>
+                                        <Style x:Key="CustomCalendarDayButton" TargetType="CalendarDayButton" BasedOn="{StaticResource MaterialDesignCalendarDayButton}">
+                                            <Setter Property="materialDesign:CalendarAssist.SelectionColor" Value="#ff2196f3" />
+                                            <Setter Property="materialDesign:CalendarAssist.SelectionForegroundColor" Value="white" />
+                                        </Style>
+                                        <Style x:Key="CustomCalendarButton" TargetType="CalendarButton" BasedOn="{StaticResource MaterialDesignCalendarButton}">
+                                            <Setter Property="materialDesign:CalendarAssist.SelectionColor" Value="#ff2196f3" />
+                                            <Setter Property="materialDesign:CalendarAssist.SelectionForegroundColor" Value="White" />
+                                        </Style>
+                                        <Style x:Key="CustomCalendar" TargetType="{x:Type Calendar}" BasedOn="{StaticResource MaterialDesignDatePickerCalendarPortrait}">
+                                            <Setter Property="Background" Value="White" />
+                                            <Setter Property="Foreground" Value="lightGray" />
+                                            <Setter Property="materialDesign:CalendarAssist.HeaderBackground" Value="DarkGray" />
+                                            <Setter Property="materialDesign:CalendarAssist.HeaderForeground" Value="White" />
+                                            <Setter Property="CalendarDayButtonStyle" Value="{StaticResource CustomCalendarDayButton}" />
+                                            <Setter Property="CalendarButtonStyle" Value="{StaticResource CustomCalendarButton}" />
+                                        </Style>
+                                        <Style TargetType="DatePicker" BasedOn="{StaticResource MaterialDesignFloatingHintDatePicker}">
+                                            <Setter Property="CalendarStyle" Value="{StaticResource CustomCalendar}" />
+                                        </Style>
+                                    </DatePicker.Resources>
+                                </DatePicker>
+                                
+                                
+
+                            </Grid>
+
+                        </Grid>
+                        
+                        
+
+                        <DataGrid x:Name="dataGrid1" Grid.Row="1" HorizontalAlignment="Center"  VerticalAlignment="Top" ScrollViewer.CanContentScroll="True"         
+                              ScrollViewer.IsDeferredScrollingEnabled="True" ScrollViewer.HorizontalScrollBarVisibility="Visible" 
+                                  AutoGenerateColumns="False" CanUserSortColumns="True" IsReadOnly="True" Margin="5"
+                                  ItemsSource="{Binding Product_in}">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Binding="{Binding Prod_code}" Header="제품코드" Width="*" IsReadOnly="True"/>
+                                <DataGridTextColumn Binding="{Binding Prod_name}" Header="제품명" Width="*" IsReadOnly="True"/>
+                                <DataGridTextColumn Binding="{Binding Category_name}" Header="품목/종류" Width="*" IsReadOnly="True"/>
+                                <DataGridTextColumn Binding="{Binding Prod_expire, StringFormat='yyyy-MM-dd'}" Header="유통기한" Width="1.3*" IsReadOnly="True"/>
+                                <DataGridTextColumn Binding="{Binding Prod_in_count, StringFormat='{}{0:#,0} 개'}" Header="수량" Width="0.5*" IsReadOnly="True">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="HorizontalAlignment" Value="Right" />
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Binding="{Binding Prod_in_date}" Header="입고일" Width="1.3*" IsReadOnly="True"/>
+                                <DataGridTextColumn Binding="{Binding Prod_in_type}" Header="입고유형" Width="0.5*" IsReadOnly="True"/>
+                                <DataGridTextColumn Binding="{Binding Prod_in_from}" Header="입고출처" Width="0.7*" IsReadOnly="True"/>
+                                <DataGridTextColumn  Header="관리자명" Width="*" IsReadOnly="True">
+                                    <DataGridTextColumn.Binding>
+                                        <MultiBinding StringFormat="{}{0} ({1})">
+                                            <Binding Path="Nurse_name" />
+                                            <Binding Path="Dept_name" />
+                                        </MultiBinding>
+                                    </DataGridTextColumn.Binding>
+                                </DataGridTextColumn>
+                            </DataGrid.Columns>
+                            <DataGrid.RowStyle>
+                                <Style TargetType="{x:Type DataGridRow}">
+                                    <Setter Property="FontSize" Value="10"/>
+                                    <Setter Property="FontFamily" Value="Arial"/>
+                                </Style>
+                            </DataGrid.RowStyle>
+                        </DataGrid>
+                    </Grid>
+
+                </Grid>
+
+                <Grid Grid.Row="1">
+                    <Grid Grid.Column="0" >
+                       
+                            <Button x:Name="export_btn" Height="26" HorizontalAlignment="Center" Grid.Column ="2" Foreground="White" Background="#4472C4"
+                                VerticalAlignment="Center" Width="150"  FontSize="13" Margin="0,0,0,10" 
+                                  Opacity="0.75" Cursor="Hand">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="MicrosoftExcel"  HorizontalAlignment="Left" VerticalAlignment="Center" Height="20" Width="20" />
+                                <TextBlock Text="DownLoad" Margin="3,0,0,0" Foreground="White" FontWeight="Bold"></TextBlock>
+                            </StackPanel>
+                                
+                            </Button>
+                            
+                       
+                        
+                    </Grid>
+                </Grid>
+            </Grid>
+        </materialDesign:Card>
+    </Grid>
+</Page>

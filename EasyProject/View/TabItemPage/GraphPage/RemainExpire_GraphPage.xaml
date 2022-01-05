@@ -1,0 +1,86 @@
+﻿<Page x:Class="EasyProject.View.TabItemPage.GraphPage.RemainExpire_GraphPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:EasyProject.View.TabItemPage.GraphPage"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+      DataContext="{Binding PSVM, Source={StaticResource Locator}}"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="RemainExpire_GraphPage">
+
+    <Grid Height="450" Width="800" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.2*" />
+            <RowDefinition Height="0.8*" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.3*"/>
+                <ColumnDefinition Width="0.3*"/>
+                <ColumnDefinition Width="0.3*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="1">
+                <Grid>
+                        <ComboBox x:Name="deptName_ComboBox_Pie23" 
+                       ItemsSource="{Binding Path=Category1}" SelectedItem="{Binding SelectedCategory1}"  VerticalAlignment="Bottom" HorizontalAlignment="Center"  Height="30" Width="182"  TextBlock.FontSize="10"     >
+                            <ComboBox.Resources>
+                                <SolidColorBrush x:Key="MaterialDesignPaper" Color="White"/>
+                            </ComboBox.Resources>
+                            <ComboBox.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform ScaleY="+1"/>
+                                    <SkewTransform/>
+                                    <RotateTransform/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </ComboBox.RenderTransform>
+
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Category_name}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding Command}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </ComboBox>
+                    </Grid>
+          
+            </Grid>
+
+            <Grid Grid.Column="2">
+
+                <Button x:Name="rightBtn"  FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
+                        VerticalAlignment="Bottom"  BorderThickness="0" Height="23" Width="51" Cursor="Hand" Background="{x:Null}" Click="LeftBtn_Click">
+                    <materialDesign:PackIcon  Kind="ArrowLeft" VerticalAlignment="Center" HorizontalAlignment="Center" Height="40" Width="26" />
+                </Button>
+
+
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="1">
+            <lvc:CartesianChart x:Name="chart1" BorderThickness="2" Series="{Binding SeriesCollection1}" 
+                             LegendLocation="Top" Height="300" Width="400"  VerticalAlignment="Center" >
+                <!--Series="{Binding SeriesCollection}"-->
+                <lvc:CartesianChart.AxisY>
+                    <lvc:Axis Labels="{Binding BarLabels1}" Title="수량" />
+                    <!-- LabelFormatter="{Binding Formatter}" 바인딩-->
+                </lvc:CartesianChart.AxisY>
+                <lvc:CartesianChart.AxisX>
+                    <lvc:Axis LabelFormatter="{Binding Formatter1}"  Title="부서별" />
+                    <!--Labels="{Binding BarLabels}" 바인딩-->
+                </lvc:CartesianChart.AxisX>
+            </lvc:CartesianChart>
+
+        </Grid>
+
+
+    </Grid>
+</Page>
